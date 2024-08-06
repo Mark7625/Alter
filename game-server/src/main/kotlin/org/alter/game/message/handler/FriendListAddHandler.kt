@@ -9,6 +9,8 @@ class FriendListAddHandler : MessageHandler<FriendListAdd> {
         client: Client,
         message: FriendListAdd,
     ) {
-        client.social.addFriend(client, message.name)
+
+        System.out.println("THIS")
+        client.socialnew.addFriend(client,message.name,true)
     }
 }

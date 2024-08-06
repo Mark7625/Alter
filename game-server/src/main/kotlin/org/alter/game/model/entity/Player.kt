@@ -19,6 +19,7 @@ import net.rsprot.protocol.game.outgoing.sound.SynthSound
 import net.rsprot.protocol.game.outgoing.varp.VarpLarge
 import net.rsprot.protocol.game.outgoing.varp.VarpSmall
 import net.rsprot.protocol.message.OutgoingGameMessage
+import org.alter.game.communication.SocialManager
 import org.alter.game.model.*
 import org.alter.game.model.appearance.Appearance
 import org.alter.game.model.appearance.Gender
@@ -465,9 +466,13 @@ open class Player(world: World) : Pawn(world) {
             write(UpdateRebootTimer(world.rebootTimer))
         }
         org.alter.game.info.PlayerInfo(this).syncAppearance()
+        socialnew.initalize()
         initiated = true
         world.plugins.executeLogin(this)
         social.updateStatus(this)
+        world.players.forEach {
+            it.socialnew.updateAllFriends(it)
+        }
     }
 
     /**
@@ -493,6 +498,9 @@ open class Player(world: World) : Pawn(world) {
         world.plugins.executeLogout(this)
         world.unregister(this)
         social.updateStatus(this)
+        world.players.forEach {
+            it.socialnew.updateAllFriends(it)
+        }
     }
 
     fun calculateWeight() {
@@ -644,4 +652,5 @@ open class Player(world: World) : Pawn(world) {
     }
 
     var social = Social()
+    val socialnew = SocialManager(this)
 }
