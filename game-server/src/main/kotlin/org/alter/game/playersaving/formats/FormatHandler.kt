@@ -9,7 +9,7 @@ abstract class FormatHandler {
 
     abstract fun saveDocument(client : Client, document : Document)
 
-    abstract fun playerExists(client : Client) : Boolean
+    abstract fun playerExists(name : Client) : Boolean
 
     abstract fun parseDocument(client : Client) : Document
 
